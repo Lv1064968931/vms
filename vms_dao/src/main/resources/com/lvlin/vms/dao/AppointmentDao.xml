@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lvlin.vms.dao.AppointmentDao">
+    <resultMap id="appointment" type="Appointment">
+        <id property="id" column="id" javaType="int"/>
+        <result property="name" column="name" javaType="String"/>
+        <result property="phoneNum" column="phone_number" javaType="String"/>
+        <result property="vaccineName" column="vaccine_name" javaType="String"/>
+        <result property="location" column="location" javaType="String"/>
+    </resultMap>
+ <insert id="insert" parameterType="Appointment">
+    insert into appointment(name,phone_number,vaccine_name,location)values(#{name},#{phoneNum},#{vaccineName},#{location})
+ </insert>
+ <update id="update" parameterType="Appointment">
+     update appointment set name=#{name},phone_number=#{phoneNum},vaccine_name=#{vaccineName},location=#{location} where id=#{id}
+ </update>
+ <delete id="deleteByName" parameterType="Appointment">
+     delete from appointment where name=#{name}
+ </delete>
+ <select id="select" parameterType="Integer" resultMap="appointment">
+     select * from appointment where id=#{id}
+ </select>
+ <select id="selectByName" parameterType="String" resultMap="appointment">
+     select * from appointment where name=#{name}
+ </select>
+<delete id="delete" parameterType="Integer">
+    delete from appointment where id=#{id}
+</delete>
+ <delete id="deleteList">
+     delete from appointment where id in
+    <foreach collection="array" item="ids" open="(" separator="," close=")">
+        #{ids}
+    </foreach>
+ </delete>
+<select id="selectAll" resultMap="appointment">
+    select * from appointment;
+</select>
+</mapper>

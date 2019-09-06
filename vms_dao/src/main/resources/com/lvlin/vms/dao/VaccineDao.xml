@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lvlin.vms.dao.VaccineDao">
+    <resultMap id="vaccine" type="Vaccine">
+        <id property="id" column="id" javaType="int"/>
+        <result property="rfidSn" column="rfid_sn" javaType="String"/>
+        <result property="name" column="name" javaType="String"/>
+        <result property="status" column="status" javaType="String"/>
+        <result property="productionDate" column="production_date" javaType="java.util.Date"/>
+        <result property="guaranteeDate" column="guarantee_date" javaType="String"/>
+        <result property="expirationDate" column="expiration_date" javaType="java.util.Date"/>
+    </resultMap>
+ <insert id="insert" parameterType="Vaccine">
+    insert into vaccine(rfid_sn,name,status,production_date,guarantee_date,expiration_date)values(#{rfidSn},#{name},#{status},#{productionDate},#{guaranteeDate},#{expirationDate})
+ </insert>
+ <update id="update" parameterType="Vaccine">
+     update vaccine set rfid_sn=#{rfidSn},name=#{name},status=#{status},production_date=#{productionDate},guarantee_date=#{guaranteeDate},expiration_date=#{expirationDate} where id=#{id}
+ </update>
+ <select id="select" parameterType="Integer" resultMap="vaccine">
+     select * from vaccine where id=#{id}
+ </select>
+<delete id="delete" parameterType="Integer">
+    delete from vaccine where id=#{id}
+</delete>
+ <delete id="deleteList">
+     delete from vaccine where id in
+    <foreach collection="array" item="ids" open="(" separator="," close=")">
+        #{ids}
+    </foreach>
+ </delete>
+<select id="selectByRfidSn" parameterType="String" resultMap="vaccine">
+    select * from vaccine where rfid_sn=#{rfidSn}
+</select>
+<select id="selectAll" resultMap="vaccine">
+    select * from vaccine;
+</select>
+</mapper>

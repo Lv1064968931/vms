@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lvlin.vms.dao.VaccineEnvironmentDao">
+    <resultMap id="vaccineEnvironment" type="VaccineEnvironment">
+        <id property="id" column="id" javaType="int"/>
+        <result property="name" column="name" javaType="String"/>
+        <result property="minTem" column="min_temperature" javaType="String"/>
+        <result property="maxTem" column="max_temperature" javaType="String"/>
+        <result property="minHum" column="min_humidity" javaType="String"/>
+        <result property="maxHum" column="max_humidity" javaType="String"/>
+        <result property="minIllu" column="min_illumination" javaType="String"/>
+        <result property="maxIllu" column="max_illumination" javaType="String"/>
+    </resultMap>
+    <insert id="insert" parameterType="VaccineEnvironment">
+    insert into vaccine_environment(name,min_temperature,max_temperature,min_humidity,max_humidity,min_illumination,max_illumination)values(#{name},#{minTem},#{maxTem},#{minHum},#{maxHum},#{minIllu},#{maxIllu})
+ </insert>
+    <update id="update" parameterType="VaccineEnvironment">
+     update vaccine_environment set name=#{name},min_temperature=#{minTem},max_temperature=#{maxTem},min_humidity=#{minHum},max_humidity=#{maxHum},min_illumination=#{minIllu},max_illumination=#{maxIllu} where id=#{id}
+ </update>
+    <select id="select" parameterType="Integer" resultMap="vaccineEnvironment">
+     select * from vaccine_environment where id=#{id}
+ </select>
+ <delete id="delete" parameterType="Integer">
+    delete from vaccine_environment where id=#{id}
+</delete>
+<delete id="deleteList">
+    delete from vaccine_environment where id in
+    <foreach collection="array" item="ids" open="(" separator="," close=")">
+        #{ids}
+    </foreach>
+</delete>
+<select id="selectAll" resultMap="vaccineEnvironment">
+    select * from vaccine_environment;
+</select>
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lvlin.vms.dao.VaccineFunctionDao">
+    <resultMap id="vaccineFunction" type="VaccineFunction">
+        <id property="id" column="id" javaType="int"/>
+        <result property="name" column="name" javaType="String"/>
+        <result property="function" column="function" javaType="String"/>
+        <result property="taboo" column="taboo" javaType="String"/>
+        <result property="standard" column="standard" javaType="String"/>
+        <result property="untowardEffect" column="untoward_effect" javaType="String"/>
+        <result property="objectVaccine" column="object_vaccine" javaType="String"/>
+    </resultMap>
+
+<select id="select" parameterType="Integer" resultMap="vaccineFunction">
+     select * from vaccine_function where id=#{id}
+</select>
+<insert id="insert" parameterType="Vaccine">
+    insert into vaccine_function(name,function,taboo,standard,untoward_effect,object_vaccine)values(#{name},#{function},#{taboo},#{standard},#{untowardEffect},#{objectVaccine})
+</insert>
+<delete id="deleteList">
+    delete from vaccine_function where id in
+    <foreach collection="array" item="ids" open="(" separator="," close=")">
+       #{ids}
+    </foreach>
+</delete>
+<select id="selectAll" resultMap="vaccineFunction">
+    select * from vaccine_function;
+</select>
+</mapper>
